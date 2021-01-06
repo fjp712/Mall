@@ -1,28 +1,6 @@
 <template>
 <div>
-    <div class="outer">
-        <div class="inter">
-            <a href="" class="logo"><img src="images/logo.png" alt=""></a>
-            <ul>
-                <li><a href="">查看所有类别</a></li>
-                <li><a href="">首页</a></li>
-                <li><a href="">所有产品</a></li>
-                <li><a href="">博客</a></li>
-                <li><a href="">文章列表</a></li>
-            </ul>
-            <a href="" class="sousuo"><i class="icon iconfont icon-sousuo"></i></a>
-            <div class="inter_right">
-                <a href="./青竹登录.html">登录</a>
-                <span>|</span>
-                <a href="./青竹注册.html">注册</a>
-                <a href="./购物车.html"><i class="icon iconfont icon-gouwuche" id="shop"></i>0</a>
-            </div>
-            <div class="shop">
-                <p>3件商品 总计:¥1111</p>
-                <div class="shop1"><a href="购物车.html">去结算</a></div>
-            </div>
-        </div>
-    </div>
+
     <div class="outer0">
         <ul class="imgList">
             <li style="z-index:1;"><a  href=""><img src="images/start.png" alt=""></a></li>
@@ -320,16 +298,25 @@
 
         </div>
     </div>
-    <div class="box3">
-        <a href=""><span><img src="images/手机图标.png" alt="">预览手机端</span></a>
-    </div>
 </div>
 </template>
 
 <script>
 
     export default {
-        name: "index"
+        name: "index",
+
+        data(){
+            return{
+                type:['a','b','c','d']
+            }
+        },
+
+        methods:{
+            loadProduction(command){
+                this.$router.push({name:'产品',query:{productname:command}})
+            }
+        }
     }
 </script>
 

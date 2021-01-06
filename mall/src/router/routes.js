@@ -1,7 +1,10 @@
-import main from "./route/main";
 import home from "./route/home";
+import production from "./route/production";
+import detail from "./route/detail";
+
 
 export default [
-        ...main,
-        ...home
+        ...home,
+    ...production,
+    ...detail
 ]
