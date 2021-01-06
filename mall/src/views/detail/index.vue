@@ -20,7 +20,10 @@
                         <span class="money">￥450</span>
                         <span>(库存20000)</span>
                     </div>
-                    <counter></counter>
+                    <div style="margin-top: 20px">
+                        <counter @countChange="setMoneySum"></counter>
+                    </div>
+                    <div style="margin-top: 20px">总价￥{{moneySum}}</div>
                     <button class="detail_shop_button">加入购物车</button>
                 </div>
             </div>
@@ -31,8 +34,18 @@
 <script>
     import Counter from "../../components/counter";
     export default {
+        data(){
+            return{
+                moneySum:0
+            }
+        },
         name: "index",
-        components: {Counter}
+        components: {Counter},
+        methods:{
+            setMoneySum(count){
+                this.moneySum=450*count
+            }
+        }
     }
 </script>
 
