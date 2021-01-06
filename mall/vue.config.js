@@ -1,0 +1,12 @@
+module.exports={
+    devServer:{
+        proxy:{
+            '/api':{
+                target:'http://192.168.43.122:2020',
+                changeOrigin:true,
+                ws:true,
+                logLevel:'debug'
+            }
+        }
+    }
+}
