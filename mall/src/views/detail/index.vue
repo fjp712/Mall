@@ -24,7 +24,7 @@
                         <counter @countChange="setMoneySum"></counter>
                     </div>
                     <div style="margin-top: 20px">总价￥{{moneySum}}</div>
-                    <button class="detail_shop_button">加入购物车</button>
+                    <button class="detail_shop_button" @click="shoppingCartAdd">加入购物车</button>
                 </div>
             </div>
         </div>
@@ -32,19 +32,26 @@
 </template>
 
 <script>
-    import Counter from "../../components/counter";
-    export default {
-        data(){
-            return{
+import {mapMutations} from 'vuex'
+import Counter from "../../components/counter";
+export default {
+   data(){
+        return{
                 moneySum:0
             }
         },
         name: "index",
         components: {Counter},
         methods:{
+            ...mapMutations('shoppingCart',['add']),
             setMoneySum(count){
                 this.moneySum=450*count
+            },
+            async shoppingCartAdd(){
+                await this.add({title:'我是商品的名称',price:'￥450',number:'10',sum:'4500'})
+                await this.$message.success('添加成功')
             }
+
         }
     }
 </script>
@@ -58,7 +65,7 @@
             flex-direction: column;
             background-color: #fff;
             margin: 0 200px 0  200px;
-            width: calc(100%-400px);
+            width: calc(100% - 400px);
             .detail_tab{
                 margin-left: 40px;
                 display: flex;

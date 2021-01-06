@@ -13,6 +13,7 @@
                 </el-dropdown>
             </div>
             <div class="link">
+                <div class="shoppingcart" @click="loadshoppingcart"><i class="el-icon-shopping-cart-1">购物车</i></div>
                 <router-link :to="{name:'产品'}">登录</router-link> | <div>注册</div>
             </div>
         </div>
@@ -36,6 +37,10 @@
 
             loadHome(){
                 this.$router.push({name:'主页'})
+            },
+
+            loadshoppingcart(){
+                this.$router.push({name:'购物车'})
             }
         }
     }
@@ -71,6 +76,12 @@
         flex-grow: 1;
         justify-content: flex-end;
         margin-right: 48px;
+        .shoppingcart{
+            margin-right:36px ;
+            &:hover{
+                cursor: pointer;
+            }
+        }
     }
 }
 </style>
