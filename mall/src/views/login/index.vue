@@ -55,6 +55,7 @@
                   {
                       this.$router.push({name:'主页',query:{token:result.data.data.token}})
                       sessionStorage.setItem('usertoken',result.data.data.token)
+                      sessionStorage.setItem('userInfo',JSON.stringify(result.data.data.userinfo))
                       this.$store.state.userInfo={...this.$store.state.userInfo,...result.data.data.userinfo}
                   }
               }

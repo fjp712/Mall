@@ -6,12 +6,12 @@
                 <div class="userInfo-card-avatar"></div>
                 <div class="userInfo-card-name">
                     <div class="userInfo-card-userName">
-                        傅继鹏
+                        {{this.userdata.name}}
                         <div class="userInfo-card-tips">
-                            普通客户
+                            {{this.userdata.type===1?'管理员':'普通用户'}}
                         </div>
                     </div>
-                    <div class="userInfo-card-id">UserId: #222</div>
+                    <div class="userInfo-card-id">UserId: #{{this.userdata.id}}</div>
                 </div>
                 <div class="userInfo-card-exitbutton">
                     <el-button type="plain">退出登录</el-button>
@@ -20,9 +20,26 @@
             <div class="userInfo-card-split"></div>
             <div class="userInfo-card-information">
                 <div class="userInfo-card-left">
-                    <div class=""></div>
+                    <div class="userInfo-card-item" v-for="item in userinfo" :key="item.icon" >
+                        <i :class="item.icon"></i>
+                        <div style="margin-left: 10px">{{item.title}}:{{item.text}}</div>
+                    </div>
                 </div>
-                <div class="userInfo-card-right"></div>
+                <div class="userInfo-card-right">
+                    <div class="userInfo-card-shoppingcart">
+                        <div>
+                            <h3>我的购物车</h3>
+                            <el-tooltip content="您购物车中有新的宝贝等着你">
+                                <el-badge is-dot class="shoppingcart" >
+                                    <i class="el-icon-shopping-cart-full"></i>
+                                </el-badge>
+                            </el-tooltip>
+                        </div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -33,24 +50,23 @@
 
     export default {
         name: "index",
-        data(){
-            return{
-                required:["name","phone","address"],
-                userinfo:[]
+        data() {
+            return {
+                required: ["name", "phone", "address"],
+                userinfo: []
             }
         },
-        computed:{
-            userdata(){
-                return this.$store.state.userInfo
-            }
+        computed: {
+            userdata() {
+                return JSON.parse(sessionStorage.getItem('userInfo'))
+            },
         },
         created() {
-            console.log(this.$store.state.userInfo)
-           for(let item of this.required)
-           {
-               this.userinfo.push({icon: icon[item],text:this.$store.state.userInfo[item] ,title: title[item]})
-           }
-           console.log(this.userinfo)
+            console.log(this.userdata)
+            for (let item of this.required) {
+                this.userinfo.push({icon: icon[item], text: this.userdata[item], title: title[item]})
+            }
+            console.log(this.userinfo)
         }
     }
 </script>
@@ -92,6 +108,8 @@
                     font-size: 20px;
                     font-weight: bold;
                     .userInfo-card-tips{
+                        display: flex;
+                        align-items: center;
                         text-align: center;
                         font-size: 12px;
                         font-weight: 200;
@@ -107,8 +125,7 @@
                             border-right-color: #42b983;
                             height: 0;
                             width: 0;
-                            position: absolute;
-                            left: 252px;
+                            margin-left: -18px;
                         }
                     }
                 }
@@ -134,12 +151,21 @@
                 height: 350px;
                 margin-left: 40px;
                 border:solid 1px #f2f2f2;
+                .userInfo-card-item{
+                    display: flex;
+                    margin-left: 20px;
+                    margin-top: 40px;
+                    border-bottom: solid 1px #f2f2f2;
+                }
             }
             .userInfo-card-right{
                 width: 600px;
                 height: 350px;
                 border:solid 1px #f2f2f2;
                 margin-left: 40px;
+                .userInfo-card-shoppingcart{
+                    margin-left: 20px;
+                }
             }
         }
     }

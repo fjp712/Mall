@@ -14,7 +14,7 @@
             </div>
             <div class="link">
                 <div class="shoppingcart" @click="loadshoppingcart"><i class="el-icon-shopping-cart-1">购物车</i></div>
-                <div v-if="!login">
+                <div v-if="!loginJudge">
                     <router-link :to="{name:'登录'}">登录</router-link> | <router-link :to="{name:'注册'}">注册</router-link>
                 </div>
                 <div v-else class="avatar" @click="loaderUserInfo">
@@ -32,7 +32,8 @@
             return{
                 items:[
                     'a','b','c','d'
-                ]
+                ],
+                loginJudge:false
             }
         },
         computed:{
@@ -44,7 +45,8 @@
             login:{
                 immediate:true,
                 handler(val){
-                    console.log(val)
+                    if(val)
+                        this.loginJudge=true
                 }
             }
         },
