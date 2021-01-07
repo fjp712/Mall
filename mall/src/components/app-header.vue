@@ -14,7 +14,7 @@
             </div>
             <div class="link">
                 <div class="shoppingcart" @click="loadshoppingcart"><i class="el-icon-shopping-cart-1">购物车</i></div>
-                <router-link :to="{name:'登录'}">登录</router-link> | <div>注册</div>
+                <router-link :to="{name:'登录'}">登录</router-link> | <router-link :to="{name:'注册'}">注册</router-link>
             </div>
         </div>
     </div>

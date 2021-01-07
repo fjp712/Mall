@@ -24,7 +24,7 @@
             </div>
             <div class="login_button">
                 <el-button type="primary" style="width: 160px" @click="userLogin">登录</el-button>
-                <el-button plain>注册</el-button>
+                <el-button  @click="userRegister">注册</el-button>
             </div>
         </div>
     </div>
@@ -46,8 +46,11 @@
               if(result.data.code===200)
               {
                   this.$router.push({name:'主页'})
-                  sessionStorage.setItem('user',result.data.data[0].toString)
+                  sessionStorage.setItem('user',result.data.data[0].toString())
               }
+            },
+            userRegister(){
+               this.$router.push({name:'注册'})
             }
         }
     }
