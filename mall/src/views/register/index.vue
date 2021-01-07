@@ -49,6 +49,7 @@
 </script>
 
 <style scoped lang="scss">
+ @import "../../style/animation/animation.css";
 .register_container{
     height: 100vh;
     margin-top: 80px;
@@ -65,6 +66,8 @@
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
+        animation-name: loaderSuccess;
+        animation-duration: 3s;
         .register-avatar{
             display: flex;
             justify-content: center;

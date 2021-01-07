@@ -14,7 +14,12 @@
             </div>
             <div class="link">
                 <div class="shoppingcart" @click="loadshoppingcart"><i class="el-icon-shopping-cart-1">购物车</i></div>
-                <router-link :to="{name:'登录'}">登录</router-link> | <router-link :to="{name:'注册'}">注册</router-link>
+                <div v-if="false">
+                    <router-link :to="{name:'登录'}">登录</router-link> | <router-link :to="{name:'注册'}">注册</router-link>
+                </div>
+                <div v-else class="avatar" @click="loaderUserInfo">
+                    头像
+                </div>
             </div>
         </div>
     </div>
@@ -30,6 +35,12 @@
                 ]
             }
         },
+        computed:{
+            login(){
+               const user= sessionStorage.getItem('user')||[]
+               return  user.length===0
+            }
+        },
         methods:{
             loadProduction(command){
                 this.$router.push({name:'产品',query:{productName:command}})
@@ -41,6 +52,10 @@
 
             loadshoppingcart(){
                 this.$router.push({name:'购物车'})
+            },
+
+            loaderUserInfo(){
+                this.$router.push({name:'用户信息'})
             }
         }
     }
@@ -78,6 +93,18 @@
         margin-right: 48px;
         .shoppingcart{
             margin-right:36px ;
+            &:hover{
+                cursor: pointer;
+            }
+        }
+        .avatar{
+            height: 40px;
+            width: 40px;
+            border-radius: 30px;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             &:hover{
                 cursor: pointer;
             }

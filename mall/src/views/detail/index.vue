@@ -48,8 +48,16 @@ export default {
                 this.moneySum=450*count
             },
             async shoppingCartAdd(){
-                await this.add({title:'我是商品的名称',price:'￥450',number:'10',sum:'4500'})
-                await this.$message.success('添加成功')
+                const user=sessionStorage.getItem('user')||[]
+                if(user.length===0)
+                {
+                    await this.$message.warning('操作失败，请先登录')
+                    this.$router.push({name:'登录'})
+                }
+                else {
+                    await this.add({title:'我是商品的名称',price:'￥450',number:'10',sum:'4500'})
+                    await this.$message.success('添加成功')
+                }
             }
 
         }

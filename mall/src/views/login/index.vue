@@ -57,6 +57,7 @@
 </script>
 
 <style scoped lang="scss">
+@import "../../style/animation/animation.css";
 .login_container{
     background: url("../../assets/background.png") center center;
     background-size: cover;
@@ -69,6 +70,8 @@
         height: 350px;
         background-color: #fff;
         box-shadow: 4px 5px 4px #5d5d5d;
+        animation-name: loaderSuccess;
+        animation-duration: 3s;
         .login_input::v-deep{
             margin-left: 25px;
             margin-top: 40px;
