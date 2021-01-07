@@ -1,9 +1,8 @@
-import axios from "../../utils/axios";
+import axios from "../../utils/axios"
+import qs from 'querystring'
+
 export const login= async function (data) {
-    const result=await axios.get('/api/user/getall',{
-        data:{
-            ...data
-        }
-    })
-    return result
+    const Data=qs.stringify(data)
+    return await axios.post('/api/user/login', Data)
+
 }

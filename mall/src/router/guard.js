@@ -3,7 +3,7 @@ import {Message} from "element-ui";
 export const enterShoppingCart=function (to,from,next) {
     if(to.name==='购物车')
     {
-        const user=sessionStorage.getItem('user')||[]
+        const user=sessionStorage.getItem('usertoken')||[]
         if(user.length===0)
         {
             Message.warning('您还没有登录，无法访问购物车')

@@ -48,7 +48,7 @@ export default {
                 this.moneySum=450*count
             },
             async shoppingCartAdd(){
-                const user=sessionStorage.getItem('user')||[]
+                const user=sessionStorage.getItem('usertoken')||[]
                 if(user.length===0)
                 {
                     await this.$message.warning('操作失败，请先登录')

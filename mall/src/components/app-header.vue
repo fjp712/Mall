@@ -14,7 +14,7 @@
             </div>
             <div class="link">
                 <div class="shoppingcart" @click="loadshoppingcart"><i class="el-icon-shopping-cart-1">购物车</i></div>
-                <div v-if="false">
+                <div v-if="!login">
                     <router-link :to="{name:'登录'}">登录</router-link> | <router-link :to="{name:'注册'}">注册</router-link>
                 </div>
                 <div v-else class="avatar" @click="loaderUserInfo">
@@ -37,8 +37,15 @@
         },
         computed:{
             login(){
-               const user= sessionStorage.getItem('user')||[]
-               return  user.length===0
+               return  this.$route.query.token
+            }
+        },
+        watch:{
+            login:{
+                immediate:true,
+                handler(val){
+                    console.log(val)
+                }
             }
         },
         methods:{

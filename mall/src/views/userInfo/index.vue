@@ -20,6 +20,7 @@
             <div class="userInfo-card-split"></div>
             <div class="userInfo-card-information">
                 <div class="userInfo-card-left">
+                    <div class=""></div>
                 </div>
                 <div class="userInfo-card-right"></div>
             </div>
@@ -28,8 +29,29 @@
 </template>
 
 <script>
+    import {icon,title} from "../../utils/enmu";
+
     export default {
-        name: "index"
+        name: "index",
+        data(){
+            return{
+                required:["name","phone","address"],
+                userinfo:[]
+            }
+        },
+        computed:{
+            userdata(){
+                return this.$store.state.userInfo
+            }
+        },
+        created() {
+            console.log(this.$store.state.userInfo)
+           for(let item of this.required)
+           {
+               this.userinfo.push({icon: icon[item],text:this.$store.state.userInfo[item] ,title: title[item]})
+           }
+           console.log(this.userinfo)
+        }
     }
 </script>
 

@@ -42,11 +42,24 @@
         },
         methods:{
            async userLogin(){
-              let result= await login({username:this.username,password:this.password})
-              if(result.data.code===200)
-              {
-                  this.$router.push({name:'主页'})
-                  sessionStorage.setItem('user',result.data.data[0].toString())
+              try {
+                  const usertoken=sessionStorage.getItem('usertoken')||[]
+                  if(usertoken.length)
+                  {
+                      this.$message.warning("请不要重复登录")
+                      return ;
+                  }
+                  let result= await login({phone:this.username,password:this.password,type:1})
+                  console.log(result)
+                  if(result.data.code===200)
+                  {
+                      this.$router.push({name:'主页',query:{token:result.data.data.token}})
+                      sessionStorage.setItem('usertoken',result.data.data.token)
+                      this.$store.state.userInfo={...this.$store.state.userInfo,...result.data.data.userinfo}
+                  }
+              }
+              catch (e) {
+                  this.$message.error(e.message)
               }
             },
             userRegister(){
