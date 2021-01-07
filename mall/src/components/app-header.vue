@@ -38,14 +38,17 @@
         },
         computed:{
             login(){
-               return  this.$route.query.token
+               return  sessionStorage.getItem('usertoken').length
+            },
+            userInfo(){
+                return JSON.parse(sessionStorage.getItem('userInfo'))
             }
         },
         watch:{
             login:{
                 immediate:true,
                 handler(val){
-                    if(val)
+                    if(val>0)
                         this.loginJudge=true
                 }
             }
@@ -60,7 +63,7 @@
             },
 
             loadshoppingcart(){
-                this.$router.push({name:'购物车'})
+                this.$router.push({name:'购物车',query:{userId:1}})
             },
 
             loaderUserInfo(){

@@ -10,12 +10,12 @@
                 <div>小计</div>
                 <div>操作</div>
             </div>
-            <div class="shoppingCart_Main" v-for="(item,index) in shoppingCart" :key="index">
-                <el-checkbox v-model="checkAll">全选</el-checkbox>
-                <div style="margin-right: 300px">{{item.title}}</div>
+            <div class="shoppingCart_Main" v-for="(item,index) in shoppingCartData" :key="index">
+                <el-checkbox v-model="checkBoxList[index]"></el-checkbox>
+                <div style="margin-right: 300px">{{item.name}}</div>
                 <div>{{item.price}}</div>
-                <div>{{item.number}}</div>
-                <div>{{item.sum}}</div>
+                <div>{{item.sale_number}}</div>
+                <div>{{item.price*item.sale_number}}</div>
                 <div class="shoppingCart_delete" @click="deleteItem(index)">删除</div>
             </div>
         </div>
@@ -23,30 +23,55 @@
 </template>
 
 <script>
-    import {mapState,mapMutations} from 'vuex'
+    import {mapState,mapMutations} from 'vuex';
+    import {getAllCommodity,DeleteCommodity} from "./service";
+
     export default {
         name: "index",
         data(){
           return{
               checkAll:false,
-              checkList:[]
+              checkList:[],
+              shoppingCartData:[],
+              checkBoxList:[]
           }
         },
         computed:{
             ...mapState('shoppingCart',['shoppingCart'])
         },
+        watch:{
+          checkAll:{
+              immediate:true,
+              handler(val){
+                      for(let index=0;index<this.checkBoxList.length;index++)
+                      {
+                          this.checkBoxList[index]=val
+                      }
+              }
+          }
+        },
         async created() {
-            // if(!this.$store.state.userInfo.length)
-            // {
-            //     await this.$message.warning('您还没有登录，无权查看购物车')
-            //     this.$router.back()
-            // }
+            try {
+                const data=await getAllCommodity()
+                this.datahandler(data)
+            }
+            catch (e) {
+                this.$message.error(e.message)
+            }
 
         },
         methods:{
             ...mapMutations('shoppingCart',['delete']),
             deleteItem(index){
-                    this.delete({index:index})
+                DeleteCommodity({user_id:1,product_id:this.shoppingCartData[index].id})
+                this.shoppingCartData.splice(index,1)
+            },
+            datahandler(data){
+                for(let item of data.data)
+                {
+                    this.shoppingCartData.push(item)
+                    this.checkBoxList.push(false)
+                }
             }
         }
     }

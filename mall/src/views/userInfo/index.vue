@@ -8,7 +8,7 @@
                     <div class="userInfo-card-userName">
                         {{this.userdata.name}}
                         <div class="userInfo-card-tips">
-                            {{this.userdata.type===1?'管理员':'普通用户'}}
+                            {{this.userdata.type===1?'普通用户':'管理员'}}
                         </div>
                     </div>
                     <div class="userInfo-card-id">UserId: #{{this.userdata.id}}</div>
