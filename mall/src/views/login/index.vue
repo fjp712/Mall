@@ -1,7 +1,7 @@
 <template>
     <div style="margin-top: 80px" class="login_container" >
         <div class="login_card">
-            <div class="login_input">
+            <div class="login_input" style="margin-top: 60px">
                 <span>账户：</span>
                 <el-input
                     clearable
@@ -74,10 +74,13 @@
             margin-top: 40px;
             display: flex;
             align-items: center;
+            font-size: 14px;
             .el-input__inner{
                 border: transparent;
                 border-radius: 0;
                 border-bottom: solid 1px #5d5d5d;
+                height: 30px;
+                width: 180px;
             }
         }
         .login_button{

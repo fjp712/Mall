@@ -8,8 +8,20 @@
                     <input type="file" accept="image/*" class="register-avatar-input" @change="canPreview">
                 </div>
             </div>
-            <div class="">
+            <div class="register_form">
+                <div class="register_item">
+                    昵称：<el-input placeholder="请输入昵称" v-model="userInfo.nickName"></el-input>
+                </div>
+                <div class="register_item">
+                    电话：<el-input placeholder="请输入电话" v-model="userInfo.phoneNumber"></el-input>
+                </div>
+                <div class="register_item">
+                    密码：<el-input placeholder="请输入密码" v-model="userInfo.password"></el-input>
+                </div>
+                <div>
 
+                </div>
+                <el-button type="primary" class="register_form_button">注册</el-button>
             </div>
         </div>
     </div>
@@ -20,7 +32,12 @@
         name: "index",
         data(){
             return{
-                src:require('@/assets/avatar.png')
+                src:require('@/assets/avatar.png'),
+                userInfo:{
+                    nickName:'',
+                    phoneNumber:'',
+                    password:''
+                }
             }
         },
         methods:{
@@ -46,7 +63,8 @@
         height: 600px;
         box-shadow: 4px 2px 3px #5d5d5d;
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
+        flex-direction: column;
         .register-avatar{
             display: flex;
             justify-content: center;
@@ -60,7 +78,7 @@
                 position: relative;
                 .register_button{
                     font-weight: bold;
-                    font-size: 15px;
+                    font-size: 12px;
                     background-color: #e3cdb6;
                     height: 40px;
                     width: 40px;
@@ -78,6 +96,31 @@
                     opacity: 0;
 
                 }
+            }
+        }
+        .register_form::v-deep{
+            margin-top: 60px;
+            .register_item{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 14px;
+                margin-top: 20px;
+                .el-input{
+                    width: 300px;
+                }
+                .el-input__inner {
+                    height: 30px;
+                    width: 300px;
+                    border: transparent;
+                    border-radius: 0;
+                    border-bottom: 1px solid #5d5d5d;
+                }
+            }
+            .register_form_button{
+                margin-left: 90px;
+                margin-top: 50px;
+                width: 60%;
             }
         }
     }
