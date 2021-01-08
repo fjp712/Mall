@@ -29,11 +29,9 @@ a{
     /*width: 100%;*/
 }
 .outer3 .inter2{
-    width: 1140px;
     height: 358px;
     margin-top: 15px;
     /*background-color: #e9e9e9;*/
-    overflow: hidden;
 }
 .outer3 .inter2 .left{
     position: relative;
@@ -115,7 +113,7 @@ a{
     list-style: none;
     margin-right: 22px;
     margin-bottom: 22px;
-    width: 210px;
+    width: 180px;
     height: 139px;
 
 }

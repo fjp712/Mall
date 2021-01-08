@@ -3,7 +3,9 @@
         <div class="userInfo-header"></div>
         <div class="userInfo-card">
             <div class="userInfo-card-header">
-                <div class="userInfo-card-avatar"></div>
+                <div class="userInfo-card-avatar">
+                    <img :src="this.userdata.avatar" style="width: 100%;height: 100%;border-radius: 50px">
+                </div>
                 <div class="userInfo-card-name">
                     <div class="userInfo-card-userName">
                         {{this.userdata.name}}
@@ -93,7 +95,7 @@
         },
         methods:{
             async getAllCommodityInformation(){
-                const data=await getAllCommodity()
+                const data=await getAllCommodity(this.userdata.id)
                 let result=data.data
                 if(result.length)
                 {
@@ -150,7 +152,7 @@
             display: flex;
             align-items: center;
             height: 150px;
-            .userInfo-card-avatar{
+            .userInfo-card-avatar {
                 height: 100px;
                 width: 100px;
                 border-radius: 50px;

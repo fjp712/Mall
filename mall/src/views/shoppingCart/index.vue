@@ -12,7 +12,7 @@
             </div>
             <div class="shoppingCart_Main" v-for="(item,index) in shoppingCartData" :key="index">
                 <el-checkbox v-model="checkBoxList[index]"></el-checkbox>
-                <div style="margin-right: 300px">
+                <div style="margin-right: 300px;display: flex;align-items: center">
                     {{item.product_name}}
                     <img :src="item.picture_url" style="width: 50px;height: 50px;margin-top: -10px">
                 </div>
@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="shoppingcart-payButton">
-            <el-button type="primary">前往支付</el-button>
+            <el-button type="primary" @click="loadPay">前往支付</el-button>
         </div>
     </div>
 </template>
@@ -43,7 +43,10 @@
           }
         },
         computed:{
-            ...mapState('shoppingCart',['shoppingCart'])
+            ...mapState('shoppingCart',['shoppingCart']),
+            userdata(){
+                return JSON.parse(sessionStorage.getItem('userInfo'))
+            }
         },
         watch:{
           checkAll:{
@@ -58,7 +61,7 @@
         },
         async created() {
             try {
-                const data=await getAllCommodity()
+                const data=await getAllCommodity(this.userdata.id)
                 this.datahandler(data)
             }
             catch (e) {
@@ -68,16 +71,22 @@
         },
         methods:{
             ...mapMutations('shoppingCart',['delete']),
+
             deleteItem(index){
-                DeleteCommodity({user_id:1,product_id:this.shoppingCartData[index].product_id})
+                DeleteCommodity({user_id:this.userdata.id,product_id:this.shoppingCartData[index].product_id})
                 this.shoppingCartData.splice(index,1)
             },
+
             datahandler(data){
                 for(let item of data.data)
                 {
                     this.shoppingCartData.push(item)
                     this.checkBoxList.push(false)
                 }
+            },
+
+            loadPay(){
+                this.$router.push({name:'支付',query:{userId:this.userdata.id}})
             }
         }
     }

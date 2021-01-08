@@ -1,23 +1,25 @@
 <template>
     <div class="container">
-        <div class="production_list" v-for="item in 3" :key="item">
+        <div class="production_list" >
 
             <div class="production_list_title">
-                <div class="production_title_main">我是大标题</div>
-                <div class="production_title_vice">我是小标题</div>
+                <div class="production_title_main">{{this.$route.query.productName}}</div>
+                <div class="production_title_vice">今日{{this.$route.query.productName}}</div>
             </div>
 
             <div class="production_list_main">
                 <div class="production_brand">
-
+                    <img :src="activityImg" style="height: 100%;width: 100%">
                 </div>
                 <div class="production_area" >
-                    <div class="production_item" v-for="production in 10" :key="production" @click="loadProduction">
-                        <div class="production_item_img"></div>
+                    <div class="production_item" v-for="item in this.productsList" :key="item.id" @click="loadProduction(item)">
+                        <div class="production_item_img">
+                            <img :src="item.picture_url" style="width: 100%;height: 100%">
+                        </div>
                         <div class="production_item_price">
                             <div>
                                 <span style="color: #ee4747">￥</span>
-                                999.9元
+                                {{item.price}}
                             </div>
                         </div>
                     </div>
@@ -29,11 +31,28 @@
 </template>
 
 <script>
-    export default {
+import {getProductInformation} from "./service";
+import middleware from "../../utils/middleware";
+export default {
         name: "index",
+        data(){
+            return{
+                productsList:[],
+                activityImg:""
+            }
+        },
+        async created() {
+            const data=await getProductInformation({product_type:this.$route.query.typeId})
+            this.activityImg=data.data.type_picture_url
+            for(let item of data.data.products)
+            {
+                this.productsList.push(item)
+            }
+        },
         methods:{
-            loadProduction(){
-                this.$router.push({name:'商品详情',query:{productId:1}})
+            loadProduction(item){
+                middleware.productInfo=item
+                this.$router.push({name:'商品详情',query:{productId:this.$route.query.typeId}})
             }
         }
     }
@@ -78,6 +97,7 @@
                 .production_item{
                     width: 19%;
                     height: 300px;
+                    margin-left: 20px;
                     &:hover{
                         cursor: pointer;
                     }

@@ -11,14 +11,14 @@
             </div>
             <div class="detail_container_main">
                 <div class="detail_img">
-
+                    <img :src="productInfo.picture_url" style="width: 100%;height: 100%">
                 </div>
                 <div class="detail_shop">
-                    <div class="detail_shop_title">我是大标题</div>
-                    <div class="detail_shop_introduce">我是描述哦</div>
+                    <div class="detail_shop_title">{{productInfo.name}}</div>
+                    <div class="detail_shop_introduce">{{productInfo.describe}}</div>
                     <div class="detail_shop_money">
-                        <span class="money">￥450</span>
-                        <span>(库存20000)</span>
+                        <span class="money">￥{{productInfo.price}}</span>
+                        <span>(库存{{productInfo.stock_number}})</span>
                     </div>
                     <div style="margin-top: 20px">
                         <counter @countChange="setMoneySum"></counter>
@@ -35,16 +35,26 @@
 import {mapMutations} from 'vuex'
 import Counter from "../../components/counter";
 import {addCommodity} from "./service";
+import middleware from "../../utils/middleware";
 
 export default {
    data(){
         return{
                 moneySum:0,
-                num:0
+                num:0,
+                productInfo:''
             }
         },
+    computed: {
+       userdata(){
+           return JSON.parse(sessionStorage.getItem('userInfo'))
+        }
+    },
         name: "index",
         components: {Counter},
+        created() {
+            this.productInfo=middleware.productInfo
+        },
         methods:{
             ...mapMutations('shoppingCart',['add']),
             setMoneySum(count){
@@ -53,6 +63,11 @@ export default {
             },
             async shoppingCartAdd(){
                 const user=sessionStorage.getItem('usertoken')||[]
+                if(this.num===0)
+                {
+                    this.$message.warning('购买数量为0，无法添加购物车')
+                    return ;
+                }
                 if(user.length===0)
                 {
                     await this.$message.warning('操作失败，请先登录')
@@ -60,7 +75,12 @@ export default {
                 }
                 else {
                     try {
-                        await addCommodity({user_id:1,product_id:2,num:this.num})
+                        const data=await addCommodity({user_id:this.userdata.id,product_id:this.productInfo.id,num:this.num})
+                        if(data.code===300)
+                        {
+                            this.$message.warning('请不要添加重复的商品')
+                            return;
+                        }
                         await this.$message.success('添加成功')
                     }
                     catch (e) {

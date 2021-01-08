@@ -2,132 +2,66 @@
 <div>
 
     <div class="outer0">
-        <ul class="imgList">
-            <li style="z-index:1;"><a  href=""><img src="images/start.png" alt=""></a></li>
-            <li><a  href=""><img src="images/start1.png" alt=""></a></li>
-            <li ><a  href=""><img src="images/start2.png" alt=""></a></li>
-        </ul>
-        <div class="focusList">
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-        </div>
+        <el-carousel type="card">
+            <el-carousel-item v-for="(item,index) in carouselImgList" :key="index">
+                <img :src="item" style="height: 300px;width: 600px">
+            </el-carousel-item>
+        </el-carousel>
     </div>
     <div class="outer1">
-        <a href="" class="a1">新品推荐，精心挑选</a>
-        <a href="" class="a2"><span >家居必备实用小单品</span></a>
+        <div  class="a1">新品推荐，精心挑选</div>
+        <div  class="a2"><span >家居必备实用小单品</span></div>
         <div class="inter1">
-            <a href="javascript:void(0)" class="zuo"><i class="icon iconfont icon-pc-zuo"></i></a>
-            <a href="javascript:void(0)" class="you"><i class="icon iconfont icon-pc-you"></i></a>
+            <div  class="zuo"><i class="icon iconfont icon-pc-zuo"></i></div>
+            <div  class="you"><i class="icon iconfont icon-pc-you"></i></div>
             <div class="bbb">
                 <ul>
-                    <li><a href=""><img src="images/png11.png" alt="" title="便携简约清扫扫帚"></a>
-                        <a href=""><p>便携简约清扫扫帚</p></a>
-                        <a href="" ><span>¥580.00</span></a>
-                    </li>
-                    <li><a href=""><img src="images/png12.png" alt="" title="简约多拼接彩色木制积木"></a>
-                        <a href=""><p>简约多拼接彩色木制积木</p></a>
-                        <a href=""><span>¥300.00</span></a>
-                    </li>
-                    <li><a href=""><img src="images/png3.png" alt="" title="黑桃自然花香蜡烛"></a>
-                        <a href=""><p>黑桃自然花香蜡烛</p></a>
-                        <a href=""><span>¥580.00</span></a>
-                    </li>
-                    <li><a href=""><img src="images/png2.png" alt="" title="简约时尚水泥花瓶"></a>
-                        <a href=""><p>简约时尚水泥花瓶</p></a>
-                        <a href=""><span>¥450.00</span></a>
-                    </li>
-                    <li><a href=""><img src="images/png13.png" alt="" title="简约木制餐盘"></a>
-                        <a href=""><p>简约木制餐盘</p></a>
-                        <a href=""><span>¥300.00</span></a>
-                    </li>
-                    <li><a href=""><img src="images/png14.png" alt="" title="不锈钢咖啡水壶"></a>
-                        <a href=""><p>不锈钢咖啡水壶</p></a>
-                        <a href=""><span>¥400.00</span></a>
-                    </li>
-                    <li><a href=""><img src="images/png15.png" alt="" title="经典系列计算机"></a>
-                        <a href=""><p>经典系列计算机</p></a>
-                        <a href=""><span>¥580.00</span></a>
+                    <li v-for="item in newRecommendData" :key="item.id" @click="loadDeatil(item)">
+                       <img :src="item.picture_url" alt="" :title="item.name">
+                        <p>{{item.name}}</p>
+                       <span>￥{{item.price}}</span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     <div class="outer2">
-        <p class="outer2_p1"><a href="">专题活动，现实促销</a></p>
+        <p class="outer2_p1">专题活动，现实促销</p>
         <div class="inter2">
             <p>严选材质，用心设计，精致家居生活</p>
         </div>
         <div class="inter3">
-            <div class="left">
-                <a href=""><img src="images/pic1.jpg" alt=""></a>
+            <div  v-for="(item,index) in activityCommodityData" :key="item.id" :class="classlist[index]">
+                <img :src="item.picture_url" alt="" :class="index===0?'bigImg':''">
                 <span class="border1"></span>
-            </div>
-            <div class="right1">
-                <a href=""><img src="images/pic2.jpg" alt=""></a>
-                <span class="border2"></span>
-            </div>
-            <div class="right2">
-                <a href=""><img src="images/pic3.jpg" alt=""></a>
-                <span class="border3"></span>
             </div>
         </div>
     </div>
     <div class="box">
-        <p class="p1"><a href="">青竹良品，你的家居首选</a></p>
+        <p class="p1">青竹良品，你的首选</p>
         <div class="box1">
             <p>天然之源，诚挚之礼，严格质检</p>
         </div>
         <div class="box2">
             <ul>
                 <div class="start">
-                    <a href=""><img src="images/png1.png" alt=""></a>
-                    <a href="" class="a1"></a>
+                    <img :src="productData[0].picture_url" alt="">
                 </div>
                 <div class="start1">
-                    <a href=""><img src="images/png6.png" alt=""></a>
-                    <a href="" class="a2"></a>
+                   <img :src="productData[1].picture_url" alt="">
                 </div>
                 <div class="end">
-                    <li class="l1"><a href="查看详情.html"><img src="images/png2.png" alt=""></a>
-                        <a href=""><p class="p11">简约时尚水泥花瓶</p></a>
-                        <p class="p22">¥450.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
+                    <li class="l1" v-for="item in productData[0].products" :key="item.id" >
+                        <img :src="item.picture_url" alt="" style="height: 100%;width: 100%">
+                        <p class="p11">{{item.name}}</p>
+                        <p class="p22">{{item.price}}</p>
+                        <div  class="a11" ><div class="d11" @click="loadDeatil(item)">查看详情</div></div>
                     </li>
-                    <li><a href="查看详情.html"><img src="images/png3.png" alt=""></a>
-                        <a href=""><p class="p11">黑陶器具</p></a>
-                        <p class="p22">¥450.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
-                    </li>
-                    <li><a href="查看详情.html"><img src="images/png4.png" alt=""></a>
-                        <p class="p11"><a href="">经典系列时钟</a></p>
-                        <p class="p22">¥580.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
-                    </li>
-                    <li><a href="查看详情.html"><img src="images/png5.png" alt=""></a>
-                        <p class="p11"><a href="">不锈钢夹子</a></p>
-                        <p class="p22">¥120.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
-                    </li>
-                    <li class="l1"><a href="查看详情.html"><img src="images/png7.png" alt=""></a>
-                        <p class="p11"><a href="">黑桃自然花香蜡烛</a></p>
-                        <p class="p22">¥580.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
-                    </li>
-                    <li><a href="查看详情.html"><img src="images/png8.png" alt=""></a>
-                        <p class="p11"><a href="">简单大容量瓷碗</a></p>
-                        <p class="p22">¥150.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
-                    </li>
-                    <li><a href="查看详情.html"><img src="images/png9.png" alt=""></a>
-                        <p class="p11"><a href="">不锈钢汤勺</a></p>
-                        <p class="p22">¥120.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
-                    </li>
-                    <li><a href="查看详情.html"><img src="images/png10.png" alt=""></a>
-                        <p class="p11"><a href="">不锈钢大号汤勺</a></p>
-                        <p class="p22">¥120.00</p>
-                        <a href="" class="a11"><div class="d11">查看详情</div></a>
+                    <li class="l1" v-for="item in productData[1].products" :key="item.id" >
+                       <img :src="item.picture_url" alt="" style="height: 100%;width: 100%">
+                        <p class="p11">{{item.name}}</p>
+                        <p class="p22">{{item.price}}</p>
+                        <div class="a11"><div class="d11" @click="loadDeatil(item)">查看详情</div></div>
                     </li>
                 </div>
             </ul>
@@ -135,59 +69,59 @@
 
     </div>
     <div class="outer3">
-        <p class="p1"><a href="">全球大牌优选，买手用心挑选</a></p>
+        <p class="p1">全球大牌优选，买手用心挑选</p>
         <div class="inter1">
             <p>全球好货 原装正品 海外直邮 自有保税仓</p>
         </div>
         <div class="inter2">
-            <div class="left">
-                <a href=""><img src="images/pic4.jpg" alt=""></a>
+            <div class="left" style="margin-left: 140px">
+                    <img
+                        :src="famousBrandData[0].picture_url"
+                        alt=""
+                        style="width: 504px;height: 358px"
+                        @click="loadDeatil(famousBrandData[0])"
+                >
                 <span class="border1"></span>
             </div>
             <div class="mid">
                 <div class="mid1">
-                    <a href=""><img src="images/pic5.jpg" alt=""></a>
+                        <img
+                            :src="famousBrandData[1].picture_url"
+                            alt=""
+                            style="width: 411px;height: 172px"
+                            @click="loadDeatil(famousBrandData[1])"
+                    >
                     <span class="border2"></span>
                 </div>
                 <div class="mid2">
-                    <a href=""><img src="images/pic6.jpg" alt=""></a>
+                        <img
+                            :src="famousBrandData[2].picture_url"
+                            alt=""
+                            style="width: 411px;height: 172px"
+                            @click="loadDeatil(famousBrandData[2])"
+                        >
                     <span class="border3"></span>
                 </div>
             </div>
-            <div class="right">
-                <a href=""><img src="images/pic7.jpg" alt=""></a>
+            <div class="right" style="margin-right: 200px">
+                    <img :src="famousBrandData[3].picture_url"
+                         alt="" style="height: 358px;width: 197px" @click="loadDeatil(famousBrandData[3])">
                 <span class="border4"></span>
             </div>
         </div>
         <div class="inter3">
             <ul>
-                <li>
-                    <a href="" class="a1"><img src="images/pic8.png" alt=""></a>
-                    <a href=""><p>自然生活，精选用料</p></a>
-                </li>
-                <li>
-                    <a href="" class="a1"><img src="images/pic9.png" alt=""></a>
-                    <a href=""><p>源点生活</p></a>
-                </li>
-                <li>
-                    <a href="" class="a1"><img src="images/pic10.png" alt=""></a>
-                    <a href=""><p>puree好设计好生活</p></a>
-                </li>
-                <li>
-                    <a href="" class="a1"><img src="images/pic11.png" alt=""></a>
-                    <a href=""><p>家居精品之选</p></a>
-                </li>
-                <li class="last">
-                    <a href="" class="a1"><img src="images/pic12.png" alt=""></a>
-                    <a href=""><p>木香，手工制作</p></a>
+                <li v-for="item in brandData" :key="item.id">
+                    <div class="a1"><img :src="item.brand_url" alt=""></div>
+                    <p>{{item.brand_name}}</p>
                 </li>
             </ul>
         </div>
     </div>
     <div class="outer5">
-        <div class="inter1">
+        <div class="inter1" style="margin-left: 140px">
             <div class="left">
-                <a href=""><img src="images/logo.png" alt=""></a>
+                <img src="images/logo.png" alt="">
                 <p>青竹良品原创生活类电商品牌，秉承一贯的严谨态度，我们深入世界各地，从源头全程严格把控商品生产环节，力求帮消费者甄选到最优质的商品，全线采用天然原材料，控制甲醛低量无害，采用进口工艺，国际生产线不断优化，食材保证核心原产地新鲜直供，让你享受品质生活</p>
             </div>
             <div class="center">
@@ -214,8 +148,8 @@
                 </dl>
             </div>
             <div class="right">
-                <img src="images/weixin.png" alt="">
-                <img src="images/weibo.png" alt="">
+                <img src="../../assets/weixin.png" alt="">
+                <img src="../../assets/weibo.png" alt="">
                 <span>微信公众号</span>
                 <span>微博公众号</span>
             </div>
@@ -229,19 +163,66 @@
 </template>
 
 <script>
-
+    import {
+        getCarousalData,
+        getNewRecommend,
+        getAcitivityInfo,
+        getProductInfo,
+        getFamousBrand,
+        getRecommendBrand
+    } from "./service";
+    import middleware from "../../utils/middleware";
     export default {
         name: "index",
 
         data(){
             return{
-                type:['a','b','c','d']
+                type:['a','b','c','d'],
+                carouselImgList:[],
+                newRecommendData:[],
+                activityCommodityData:[],
+                productData:[],
+                famousBrandData:[],
+                brandData:[],
+                classlist:['left','right1','right2']
             }
         },
-
+        async created() {
+           await this.datahandler()
+        },
         methods:{
-            loadProduction(command){
-                this.$router.push({name:'产品',query:{productname:command}})
+            loadProduction(command) {
+                this.$router.push({name: '产品', query: {productname: command}})
+            },
+            async datahandler(){
+                try {
+                    let carouseldata=await getCarousalData()
+                    let newRecommendData=await getNewRecommend()
+                    let activityDatatemplate=await getAcitivityInfo()
+                    let productInfotemplate=await getProductInfo()
+                    let famousBrandtemplate=await getFamousBrand()
+                    let brandInfo=await getRecommendBrand()
+                    for(let item of carouseldata.data)
+                        this.carouselImgList.push(item.picture_url)
+                    for(let item of newRecommendData.data)
+                        this.newRecommendData.push(item)
+                    for(let item of activityDatatemplate.data)
+                        this.activityCommodityData.push(item)
+                    for(let item of productInfotemplate.data)
+                        this.productData.push(item)
+                    for(let item of famousBrandtemplate.data)
+                        this.famousBrandData.push(item)
+                    for(let item of brandInfo.data)
+                        this.brandData.push(item)
+                }
+                catch (e) {
+                    this.$message.warning(e.message)
+                }
+
+            },
+            loadDeatil(item){
+                middleware.productInfo=item
+                this.$router.push({name:'商品详情'})
             }
         }
     }
@@ -255,4 +236,11 @@
 @import "./style/青竹4.css";
 @import "./style/青竹5.css";
 @import "./style/青竹6.css";
+    .outer0{
+        margin:80px 140px 0 140px;
+    }
+    .bigImg{
+        height: 380px;
+        width: 680px;
+    }
 </style>

@@ -3,5 +3,6 @@ import qs from 'querystring'
 
 export const addCommodity=async function(data){
     const Postdata=qs.stringify(data)
-    await axios.post('/api/shoppingcart/addcart',Postdata)
+    const result= await axios.post('/api/shoppingcart/addcart',Postdata)
+    return result.data
 }

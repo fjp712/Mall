@@ -58,6 +58,9 @@
                       sessionStorage.setItem('userInfo',JSON.stringify(result.data.data.userinfo))
                       this.$store.state.userInfo={...this.$store.state.userInfo,...result.data.data.userinfo}
                   }
+                  else {
+                      this.$message.error('用户名或者密码错误')
+                  }
               }
               catch (e) {
                   this.$message.error(e.message)

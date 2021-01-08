@@ -16,18 +16,19 @@
                     电话：<el-input placeholder="请输入电话" v-model="userInfo.phoneNumber"></el-input>
                 </div>
                 <div class="register_item">
-                    密码：<el-input placeholder="请输入密码" v-model="userInfo.password"></el-input>
+                    密码：<el-input placeholder="请输入密码" v-model="userInfo.password" ></el-input>
                 </div>
                 <div>
 
                 </div>
-                <el-button type="primary" class="register_form_button">注册</el-button>
+                <el-button type="primary" class="register_form_button" @click="uploadData">注册</el-button>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import axios from "../../utils/axios";
     export default {
         name: "index",
         data(){
@@ -36,13 +37,34 @@
                 userInfo:{
                     nickName:'',
                     phoneNumber:'',
-                    password:''
+                    password:'',
+                    file:''
                 }
             }
         },
         methods:{
             canPreview(event){
+                this.userInfo.file=event.target.files[0]
+                console.log(this.file)
                 this.src=URL.createObjectURL(event.target.files[0])
+            },
+            uploadData(){
+                if(!(this.userInfo.phoneNumber.length===11&&/\d+/g.test(this.userInfo.phoneNumber)))
+                {
+                    this.$message.warning('请输入正确格式的电话号码')
+                    return;
+                }
+                let form=new FormData()
+                form.append('name',this.userInfo.nickName)
+                form.append('phone',this.userInfo.phoneNumber)
+                form.append('password',this.userInfo.password)
+                form.append('avatar',this.userInfo.file)
+                console.log(form.get('avatar'))
+                axios.post('/api/user/register',form,{
+                    'Content-Type': 'multipart/form-data'
+                }).catch((e)=>{
+                    this.$message.error(e.message)
+                })
             }
         }
     }

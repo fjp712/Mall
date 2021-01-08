@@ -6,8 +6,8 @@
                 <el-dropdown @command="loadProduction" >
                     <div >所有产品</div>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item v-for="item in items" :key="item" :command="item">
-                            {{item}}
+                        <el-dropdown-item v-for="item in options" :key="item.id" :command="item">
+                            {{item.type_name}}
                         </el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
@@ -18,7 +18,7 @@
                     <router-link :to="{name:'登录'}">登录</router-link> | <router-link :to="{name:'注册'}">注册</router-link>
                 </div>
                 <div v-else class="avatar" @click="loaderUserInfo">
-                    头像
+                    <img :src="userInfo.avatar" style="height: 100%;width: 100%;border-radius: 30px">
                 </div>
             </div>
         </div>
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import axios from "../utils/axios";
     export default {
         name: "app-header",
         data(){
@@ -33,7 +34,8 @@
                 items:[
                     'a','b','c','d'
                 ],
-                loginJudge:false
+                loginJudge:false,
+                options:[]
             }
         },
         computed:{
@@ -52,9 +54,14 @@
                 }
             }
         },
+        created() {
+            this.getProductOptions()
+        },
         methods:{
             loadProduction(command){
-                this.$router.push({name:'产品',query:{productName:command}})
+                console.log(command)
+                this.$router.replace({name:'产品',query:{productName:command.type_name,typeId:command.id}})
+                window.location.reload()
             },
 
             loadHome(){
@@ -67,6 +74,13 @@
 
             loaderUserInfo(){
                 this.$router.push({name:'用户信息'})
+            },
+
+            async getProductOptions(){
+                const data=await axios.get("/api/producttype/getall")
+                for(let item of data.data.data){
+                    this.options.push(item)
+                }
             }
         }
     }

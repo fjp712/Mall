@@ -5,6 +5,7 @@ import shoppingCart from "./route/shoppingCart";
 import login from "./route/login";
 import register from "./route/register";
 import userInfo from "./route/userInfo";
+import pay from "./route/pay";
 export default [
         ...home,
     ...production,
@@ -12,5 +13,6 @@ export default [
     ...shoppingCart,
     ...login,
     ...register,
-    ...userInfo
+    ...userInfo,
+    ...pay
 ]
