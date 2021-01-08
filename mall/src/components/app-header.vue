@@ -59,9 +59,17 @@
         },
         methods:{
             loadProduction(command){
-                console.log(command)
-                this.$router.replace({name:'产品',query:{productName:command.type_name,typeId:command.id}})
-                window.location.reload()
+                if(!this.$route.path.includes('production'))
+                {
+                    this.$router.push({name:'产品',query:{productName:command.type_name,typeId:command.id}})
+
+                }
+                else
+                {
+                    this.$router.replace({name:'产品',query:{productName:command.type_name,typeId:command.id}})
+                    window.location.reload()
+                }
+
             },
 
             loadHome(){

@@ -1,3 +1,4 @@
 export default {
-    productInfo:""
+    productInfo:"",
+    router:''
 }

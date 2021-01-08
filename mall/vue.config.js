@@ -2,7 +2,7 @@ module.exports={
     devServer:{
         proxy:{
             '/api':{
-                target:'http://192.168.43.122:2020',
+                target:'http://39.106.163.107:8080',
                 changeOrigin:true,
                 ws:true,
                 logLevel:'debug'
