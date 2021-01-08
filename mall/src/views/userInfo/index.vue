@@ -14,7 +14,7 @@
                     <div class="userInfo-card-id">UserId: #{{this.userdata.id}}</div>
                 </div>
                 <div class="userInfo-card-exitbutton">
-                    <el-button type="plain">退出登录</el-button>
+                    <el-button type="plain" @click="exitLogin">退出登录</el-button>
                 </div>
             </div>
             <div class="userInfo-card-split"></div>
@@ -27,16 +27,29 @@
                 </div>
                 <div class="userInfo-card-right">
                     <div class="userInfo-card-shoppingcart">
-                        <div>
+                        <div >
                             <h3>我的购物车</h3>
-                            <el-tooltip content="您购物车中有新的宝贝等着你">
-                                <el-badge is-dot class="shoppingcart" >
+                            <el-tooltip :content="shoppingcart.message">
+                                <el-badge :is-dot="shoppingcart.is_dot" class="shoppingcart" >
                                     <i class="el-icon-shopping-cart-full"></i>
                                 </el-badge>
                             </el-tooltip>
+                            <div class="userInfo-card-message">
+                                <div class="userInfo-card-shoppingcartMessage">
+                                    <i class="el-icon-warning"></i>您的购物车还有
+                                    <span style="color: #d45f5f">{{shoppingcart.num}}</span>
+                                    件物品没有付款
+                                </div>
+                                <div class="userInfo-card-activity" v-for="item in this.activity" :key="item.id">
+                                    <div style="color: #d45f5f">
+                                        <h4>热门推荐</h4>
+                                    </div>
+                                    <span style="font-weight: bold">{{item.name}}</span>
+                                </div>
+                            </div>
                         </div>
                         <div>
-
+                            <h4>根据您的购物车，我们为您推荐</h4>
                         </div>
                     </div>
                 </div>
@@ -47,13 +60,21 @@
 
 <script>
     import {icon,title} from "../../utils/enmu";
+    import {getAllCommodity} from "../shoppingCart/service";
+    import {getReommendActivity} from "./service";
 
     export default {
         name: "index",
         data() {
             return {
                 required: ["name", "phone", "address"],
-                userinfo: []
+                userinfo: [],
+                shoppingcart:{
+                    num:0,
+                    is_dot:false,
+                    message:'您的购物车为空'
+                },
+                activity:[]
             }
         },
         computed: {
@@ -67,6 +88,41 @@
                 this.userinfo.push({icon: icon[item], text: this.userdata[item], title: title[item]})
             }
             console.log(this.userinfo)
+            this.getAllCommodityInformation()
+            this.getRecommendActvity()
+        },
+        methods:{
+            async getAllCommodityInformation(){
+                const data=await getAllCommodity()
+                let result=data.data
+                if(result.length)
+                {
+                    for(let i of result)
+                    {
+                        this.shoppingcart.num+=i.product_num
+                    }
+                    this.shoppingcart.is_dot=true
+                    this.shoppingcart.message='您购物车中有新的宝贝等着你'
+                }
+
+            },
+            async getRecommendActvity(){
+                try {
+                    const data=await getReommendActivity()
+                    const result=data.data.data.slice(0,1)
+                    for(let item of result)
+                    {
+                        this.activity.push(item)
+                    }
+                }
+                catch (e) {
+                    this.$message.warning('活动请求出错')
+                }
+            },
+            exitLogin(){
+                sessionStorage.setItem('usertoken','')
+                this.$router.push({name:"主页"})
+            }
         }
     }
 </script>
@@ -165,6 +221,44 @@
                 margin-left: 40px;
                 .userInfo-card-shoppingcart{
                     margin-left: 20px;
+                    .userInfo-card-message{
+                        width: 600px;
+                        height: 120px;
+                        display: flex;
+                        align-items: center;
+                        .userInfo-card-shoppingcartMessage{
+                            width: 300px;
+                            height: 80px;
+                            background-color: #F2F2F2;
+                            border-radius: 10px;
+                            text-align: center;
+                           display: flex;
+                            align-items: center;
+                            &::before{
+                                display: block;
+                                content: "";
+                                height: 0;
+                                width: 0;
+                                border: solid 15px transparent;
+                                border-top-color: #F2F2F2;
+                                border-right-color: #F2F2F2 ;
+                                margin-left: -15px;
+                                margin-top: 30px;
+                            }
+                        }
+                        .userInfo-card-activity{
+                            width: 120px;
+                            height: 120px;
+                            margin-left: 60px;
+                            background: url("../../assets/recommend.png") center center;
+                            background-size: cover;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            flex-direction: column;
+                        }
+                    }
+
                 }
             }
         }

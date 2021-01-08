@@ -33,7 +33,7 @@
         name: "index",
         methods:{
             loadProduction(){
-                this.$router.push({name:'商品详情'})
+                this.$router.push({name:'商品详情',query:{productId:1}})
             }
         }
     }

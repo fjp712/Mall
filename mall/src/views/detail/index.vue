@@ -34,10 +34,13 @@
 <script>
 import {mapMutations} from 'vuex'
 import Counter from "../../components/counter";
+import {addCommodity} from "./service";
+
 export default {
    data(){
         return{
-                moneySum:0
+                moneySum:0,
+                num:0
             }
         },
         name: "index",
@@ -45,6 +48,7 @@ export default {
         methods:{
             ...mapMutations('shoppingCart',['add']),
             setMoneySum(count){
+                this.num=count
                 this.moneySum=450*count
             },
             async shoppingCartAdd(){
@@ -55,8 +59,14 @@ export default {
                     this.$router.push({name:'登录'})
                 }
                 else {
-                    await this.add({title:'我是商品的名称',price:'￥450',number:'10',sum:'4500'})
-                    await this.$message.success('添加成功')
+                    try {
+                        await addCommodity({user_id:1,product_id:2,num:this.num})
+                        await this.$message.success('添加成功')
+                    }
+                    catch (e) {
+                        this.$message.error('购物车添加失败')
+                    }
+                    // await this.add({title:'我是商品的名称',price:'￥450',number:'10',sum:'4500'})
                 }
             }
 

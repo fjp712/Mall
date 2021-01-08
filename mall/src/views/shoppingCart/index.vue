@@ -12,12 +12,18 @@
             </div>
             <div class="shoppingCart_Main" v-for="(item,index) in shoppingCartData" :key="index">
                 <el-checkbox v-model="checkBoxList[index]"></el-checkbox>
-                <div style="margin-right: 300px">{{item.name}}</div>
-                <div>{{item.price}}</div>
-                <div>{{item.sale_number}}</div>
-                <div>{{item.price*item.sale_number}}</div>
+                <div style="margin-right: 300px">
+                    {{item.product_name}}
+                    <img :src="item.picture_url" style="width: 50px;height: 50px;margin-top: -10px">
+                </div>
+                <div>￥{{item.product_price}}</div>
+                <div>{{item.product_num}}</div>
+                <div>{{item.total}}</div>
                 <div class="shoppingCart_delete" @click="deleteItem(index)">删除</div>
             </div>
+        </div>
+        <div class="shoppingcart-payButton">
+            <el-button type="primary">前往支付</el-button>
         </div>
     </div>
 </template>
@@ -63,7 +69,7 @@
         methods:{
             ...mapMutations('shoppingCart',['delete']),
             deleteItem(index){
-                DeleteCommodity({user_id:1,product_id:this.shoppingCartData[index].id})
+                DeleteCommodity({user_id:1,product_id:this.shoppingCartData[index].product_id})
                 this.shoppingCartData.splice(index,1)
             },
             datahandler(data){
@@ -97,6 +103,9 @@
                 }
             }
         }
+    }
+    .shoppingcart-payButton{
+        margin-top: 40px;
     }
 }
 </style>

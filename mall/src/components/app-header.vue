@@ -48,8 +48,7 @@
             login:{
                 immediate:true,
                 handler(val){
-                    if(val>0)
-                        this.loginJudge=true
+                    this.loginJudge = val > 0;
                 }
             }
         },
