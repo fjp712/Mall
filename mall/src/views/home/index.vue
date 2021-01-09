@@ -50,17 +50,17 @@
                    <img :src="productData[1].picture_url" alt="">
                 </div>
                 <div class="end">
-                    <li class="l1" v-for="item in productData[0].products" :key="item.id" >
+                    <li class="l1" v-for="item in productData[0].products" :key="item.id" @click="loadDeatil(item)">
                         <img :src="item.picture_url" alt="" style="height: 100%;width: 100%">
                         <p class="p11">{{item.name}}</p>
                         <p class="p22">{{item.price}}</p>
-                        <div  class="a11" ><div class="d11" @click="loadDeatil(item)">查看详情</div></div>
+                        <div  class="a11" ><div class="d11" >查看详情</div></div>
                     </li>
-                    <li class="l1" v-for="item in productData[1].products" :key="item.id" >
+                    <li class="l1" v-for="item in productData[1].products" :key="item.id" @click="loadDeatil(item)">
                        <img :src="item.picture_url" alt="" style="height: 100%;width: 100%">
                         <p class="p11">{{item.name}}</p>
                         <p class="p22">{{item.price}}</p>
-                        <div class="a11"><div class="d11" @click="loadDeatil(item)">查看详情</div></div>
+                        <div class="a11"><div class="d11" >查看详情</div></div>
                     </li>
                 </div>
             </ul>

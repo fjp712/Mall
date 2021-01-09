@@ -35,26 +35,17 @@
                     'a','b','c','d'
                 ],
                 loginJudge:false,
-                options:[]
+                options:[],
+                timer:null
             }
         },
         computed:{
-            login(){
-               return  sessionStorage.getItem('usertoken').length
-            },
             userInfo(){
                 return JSON.parse(sessionStorage.getItem('userInfo'))
             }
         },
-        watch:{
-            login:{
-                immediate:true,
-                handler(val){
-                    this.loginJudge = val > 0;
-                }
-            }
-        },
         created() {
+            this.timer=setInterval(()=>this.loginJudge=sessionStorage.getItem('usertoken').length>0,3000)
             this.getProductOptions()
         },
         methods:{
