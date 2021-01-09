@@ -48,6 +48,9 @@
             this.timer=setInterval(()=>this.loginJudge=sessionStorage.getItem('usertoken').length>0,3000)
             this.getProductOptions()
         },
+        beforeDestroy() {
+            clearInterval(this.timer)
+        },
         methods:{
             loadProduction(command){
                 if(!this.$route.path.includes('production'))
