@@ -62,6 +62,14 @@
                 console.log(form.get('avatar'))
                 axios.post('/api/user/register',form,{
                     'Content-Type': 'multipart/form-data'
+                }).then((data)=>{
+                    if(data.data.code===300)
+                        this.$message.warning('该手机号已经被注册')
+                    else
+                    {
+                        this.$message.success('注册成功')
+                        this.$router.push({name:'登录'})
+                    }
                 }).catch((e)=>{
                     this.$message.error(e.message)
                 })

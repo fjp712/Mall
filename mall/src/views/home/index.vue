@@ -1,6 +1,5 @@
 <template>
-<div>
-
+<div style="margin-top: 80px">
     <div class="outer0">
         <el-carousel type="card">
             <el-carousel-item v-for="(item,index) in carouselImgList" :key="index">
@@ -202,6 +201,7 @@
                     let productInfotemplate=await getProductInfo()
                     let famousBrandtemplate=await getFamousBrand()
                     let brandInfo=await getRecommendBrand()
+                    console.log(famousBrandtemplate)
                     for(let item of carouseldata.data)
                         this.carouselImgList.push(item.picture_url)
                     for(let item of newRecommendData.data)
@@ -222,7 +222,7 @@
             },
             loadDeatil(item){
                 middleware.productInfo=item
-                this.$router.push({name:'商品详情'})
+                this.$router.push({name:'商品详情',query:{productName:item.name}})
             }
         }
     }

@@ -2,12 +2,8 @@
     <div style="margin-top: 80px" class="detail_main">
         <div class="detail_container">
             <div class="detail_tab">
-                <div v-for="(item,index) in 4" :key="item">
-                    <span :class="index===3?'detail_tab_endWord':''">{{item}}</span>
-                    <span v-if="index!==3">
-                        >
-                    </span>
-                </div>
+                    <span>详情 > </span>
+                    <span class="detail_tab_endWord">{{name}}</span>
             </div>
             <div class="detail_container_main">
                 <div class="detail_img">
@@ -46,8 +42,11 @@ export default {
             }
         },
     computed: {
-       userdata(){
+        userdata(){
            return JSON.parse(sessionStorage.getItem('userInfo'))
+        },
+        name(){
+           return middleware.productInfo.name
         }
     },
         name: "index",
@@ -59,7 +58,7 @@ export default {
             ...mapMutations('shoppingCart',['add']),
             setMoneySum(count){
                 this.num=count
-                this.moneySum=450*count
+                this.moneySum=this.productInfo.price*count
             },
             async shoppingCartAdd(){
                 const user=sessionStorage.getItem('usertoken')||[]
@@ -82,6 +81,7 @@ export default {
                             return;
                         }
                         await this.$message.success('添加成功')
+                        this.$router.push({name:'购物车'})
                     }
                     catch (e) {
                         this.$message.error('购物车添加失败')
